@@ -1,0 +1,89 @@
+<ContentNavigationDrawer>:
+    MDNavigationDrawerMenu:
+
+        MDNavigationDrawerHeader:
+            title: "Header title"
+            title_color: "#4a4939"
+            text: "Header text"
+            spacing: "4dp"
+            padding: "12dp", 0, 0, "56dp"
+
+        MDNavigationDrawerLabel:
+            text: "Mail"
+
+        MDNavigationDrawerItem:
+            icon: "gmail"
+            right_text: "+99"
+            text_right_color: "#4a4939"
+            text: "Screen1"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr 1"
+
+        MDNavigationDrawerItem:
+            icon: "send"
+            text: "Screen2"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr 2"
+
+        MDNavigationDrawerItem:
+            icon: "send"
+            text: "Screen3"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr 3"
+
+        MDNavigationDrawerDivider:
+
+        MDNavigationDrawerLabel:
+            text: "Labels"
+
+        MDNavigationDrawerItem:
+            icon: "information-outline"
+            text: "Label"
+
+        MDNavigationDrawerItem:
+            icon: "information-outline"
+            text: "Label"
+            
+
+<InterfazMain>:
+    MDScreen:
+
+        MDTopAppBar:
+            pos_hint: {"top": 1}
+            #elevation: 4
+            title: "MDNavigationDrawer"
+            left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+
+        MDNavigationLayout:
+
+            MDScreenManager:
+                id: screen_manager
+
+                MDScreen:
+                    name: "scr 1"
+                    MDLabel:
+                        text: "Screen 1"
+                        #halign: "center"
+                MDScreen:
+                    name: "scr 2"
+                    MDLabel:
+                        text: "Screen 2"
+                        #halign: "center"
+                Screen3:
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            radius: (0, 0, 0, 0)
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+
+
+<Screen3>:
+    name: "scr 3"
+    MDLabel:
+        text: "Screen 3"
+        #halign: "center"
