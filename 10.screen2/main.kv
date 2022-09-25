@@ -1,0 +1,50 @@
+#thank to https://www.youtube.com/watch?v=Qebmw1sVktY
+<ContentMenu>:
+    BoxLayout:
+        orientation: 'vertical'
+        Button:
+            text:"Go to settings"
+        ScrollView:
+            MDList:
+                OneLineListItem:
+                    text: "go to Screen 1"
+                    on_release:
+                        root.nav_drawer.set_state("close")
+                        root.screen_manager.current = "screen1"
+
+                OneLineListItem:
+                    text: "go to Screen 2"
+                    on_release:
+                        root.nav_drawer.set_state("close")
+                        root.screen_manager.current = "screen2"
+
+
+<InterfazMain>:
+    Screen:
+        MDTopAppBar:
+            pos_hint: {"top": 1}
+            elevation: 4
+            title: "MDNavigationDrawer"
+            left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        MDNavigationDrawer:
+            id:nav_drawer
+            radius: (0, 0, 0, 0)
+            ContentMenu:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+        
+        MDNavigationLayout:
+            ScreenManager:
+                id:screen_manager
+                Screen:
+                    name:"screen1"
+                    MDLabel:
+                        text: "Screen1"
+                        #halign: "center"
+                Screen:
+                    name:"screen2"
+                    MDLabel:
+                        text: "Screen2"
+                        #halign: "center"
+            
+            
