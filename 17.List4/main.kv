@@ -1,0 +1,147 @@
+<ContentNavigationDrawer>:
+    MDNavigationDrawerMenu:
+
+        MDNavigationDrawerHeader:
+            title: "Header title"
+            title_color: "#4a4939"
+            text: "Header text"
+            spacing: "4dp"
+            padding: "12dp", 0, 0, "56dp"
+
+        MDNavigationDrawerLabel:
+            text: "Mail"
+
+        MDNavigationDrawerItem:
+            icon: "gmail"
+            right_text: "+99"
+            text_right_color: "#4a4939"
+            text: "Screen1"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr1"
+
+        MDNavigationDrawerItem:
+            icon: "send"
+            text: "Screen2"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr2"
+
+        MDNavigationDrawerItem:
+            icon: "send"
+            text: "Screen3"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr3"
+
+        MDNavigationDrawerDivider:
+
+        MDNavigationDrawerLabel:
+            text: "Labels"
+
+        MDNavigationDrawerItem:
+            icon: "information-outline"
+            text: "Label"
+
+        MDNavigationDrawerItem:
+            icon: "information-outline"
+            text: "Label"
+            
+
+<InterfazMain>:
+    MDScreen:
+        MDTopAppBar:
+            pos_hint: {"top": 1}
+            elevation: 4
+            title: "MDNavigationDrawer"
+            left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        MDNavigationLayout:
+            MDScreenManager:
+                id: screen_manager
+                #Screen1:
+                MDScreen:
+                    name:"scr1"
+                    MDBoxLayout:
+                        orientation:"vertical"
+                        #spacing:"25dp"
+                        padding:[12,80,12,12]
+                        
+                        #MDTextField corre con errores, revisar
+                        MDTextField:
+                            id: nombre_input
+                            hint_text: "nombre"
+                            mode: "rectangle"
+                            multiline: False
+                            icon_left: 'account'
+                            helper_text_mode: 'on_error'
+                            helper_text: ''
+                            mode: "fill"
+                            fill_color: 0, 0, 0, .4
+                        
+                        MDFlatButton:
+                            font_size: 25
+                            text: "Buscar"
+                            on_press: app.save_cust_to_db()
+                            md_bg_color: app.theme_cls.primary_color
+                            theme_text_color: "Custom"
+                            text_color: 0.93, 0.93, 0.93, 1
+
+                        MDScrollView:
+                            #do_scroll_y:True
+                            #effect_cls:"ScrollEffect"
+                            #bar_width:0
+                            MDList:
+                                id:scroll
+
+                                #OneLineAvatarIconListItem:
+                                #    text:"registro 1"
+                                #    IconLeftWidget:
+                                #        icon: "language-python"
+                                #    RightCheckbox:
+                                #OneLineAvatarIconListItem:
+                                #    text:"registro 2"
+                                #    IconLeftWidget:
+                                #        icon: "language-python"
+                                #    RightCheckbox:
+                                #OneLineAvatarIconListItem:
+                                #    text:"registro 3"
+                                #    IconLeftWidget:
+                                #        icon: "language-python"
+                                #    RightCheckbox:
+                Screen2:
+                Screen3:
+        MDNavigationDrawer:
+            id: nav_drawer
+            radius: (0, 0, 0, 0)
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+
+#<Screen1>:
+#MDScreen:
+#    MDScrollView:
+#        MDList:
+#            #id: scroll
+#            #scroll:scroll
+#            id: root.scroll
+        
+
+<Screen2>:
+#MDScreen:
+    name: "scr2"
+    MDLabel:
+        text: "Sscr2"
+        #halign: "center"
+
+<Screen3>:
+#MDScreen:
+    name: "scr3"
+    MDLabel:
+        text: "scr3"
+        #halign: "center"
+
+<ListItemWithCheckbox>:
+    #text:root.shopItem.name
+    IconLeftWidget:
+        icon: root.icon
+    RightCheckbox:
