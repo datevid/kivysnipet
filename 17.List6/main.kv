@@ -1,0 +1,219 @@
+<ContentNavigationDrawer>:
+    MDNavigationDrawerMenu:
+
+        MDNavigationDrawerHeader:
+            title: "Header title"
+            title_color: "#4a4939"
+            text: "Header text"
+            spacing: "4dp"
+            padding: "12dp", 0, 0, "56dp"
+
+        MDNavigationDrawerLabel:
+            text: "Mail"
+
+        MDNavigationDrawerItem:
+            icon: "gmail"
+            right_text: "+99"
+            text_right_color: "#4a4939"
+            text: "Screen1"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr1"
+
+        MDNavigationDrawerItem:
+            icon: "send"
+            text: "Screen2"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr2"
+
+        MDNavigationDrawerItem:
+            icon: "send"
+            text: "Screen3"
+            on_press:
+                root.nav_drawer.set_state("close")
+                root.screen_manager.current = "scr3"
+
+        MDNavigationDrawerDivider:
+
+        MDNavigationDrawerLabel:
+            text: "Labels"
+
+        MDNavigationDrawerItem:
+            icon: "information-outline"
+            text: "Label"
+
+        MDNavigationDrawerItem:
+            icon: "information-outline"
+            text: "Label"
+            
+
+<InterfazMain>:
+    MDScreen:
+        MDTopAppBar:
+            pos_hint: {"top": 1}
+            elevation: 4
+            title: "Mis actividades"
+            left_action_items: [["menu", lambda x: nav_drawer.set_state("open")]]
+        MDNavigationLayout:
+            MDScreenManager:
+                id: screen_manager
+                #Screen1:
+                MDScreen:
+                    name:"scr1"
+                    
+                    #listado de tareas/actividades
+                    MDBoxLayout:
+                        orientation:"vertical"
+                        #spacing:"25dp"
+                        padding:[12,80,12,12]
+                        
+                        #MDTextField corre con errores, revisar
+                        #MDTextField:
+                        #    id: nombre_input
+                        #    hint_text: "nombre"
+                        #    mode: "rectangle"
+                        #    multiline: False
+                        #    icon_left: 'account'
+                        #    helper_text_mode: 'on_error'
+                        #    helper_text: ''
+                        #    mode: "fill"
+                        #    fill_color: 0, 0, 0, .4
+                        
+                        #MDFlatButton:
+                        #    font_size: 25
+                        #    text: "Buscar"
+                        #    on_press: app.save_cust_to_db()
+                        #    md_bg_color: app.theme_cls.primary_color
+                        #    theme_text_color: "Custom"
+                        #    text_color: 0.93, 0.93, 0.93, 1
+
+                        MDScrollView:
+                            #do_scroll_y:True
+                            #effect_cls:"ScrollEffect"
+                            #bar_width:0
+                            MDList:
+                                id:scroll
+
+                                #OneLineAvatarIconListItem:
+                                #    text:"registro 1"
+                                #    IconLeftWidget:
+                                #        icon: "language-python"
+                                #    RightCheckbox:
+                                #OneLineAvatarIconListItem:
+                                #    text:"registro 2"
+                                #    IconLeftWidget:
+                                #        icon: "language-python"
+                                #    RightCheckbox:
+                                #OneLineAvatarIconListItem:
+                                #    text:"registro 3"
+                                #    IconLeftWidget:
+                                #        icon: "language-python"
+                                #    RightCheckbox:
+                    
+                    #boton to add to list
+                    MDFloatLayout:
+                        MDIconButton:
+                            icon:"plus"
+                            pos_hint: {'center_x': 0.9,'center_y': 0.1}
+                            font_size:"300sp"
+                            md_bg_color: 1,170/255,23/255,1
+                            theme_text_color:"Custom"
+                            text_color:1,1,1,1
+                            on_release:
+                                #app.addNewItemToMain()
+                                app.openDialogNewActivi()
+
+                Screen2:
+                Screen3:
+        MDNavigationDrawer:
+            id: nav_drawer
+            radius: (0, 0, 0, 0)
+            ContentNavigationDrawer:
+                screen_manager: screen_manager
+                nav_drawer: nav_drawer
+
+#<Screen1>:
+#MDScreen:
+#    MDScrollView:
+#        MDList:
+#            #id: scroll
+#            #scroll:scroll
+#            id: root.scroll
+        
+
+<Screen2>:
+#MDScreen:
+    name: "scr2"
+    MDLabel:
+        text: "Sscr2"
+        #halign: "center"
+
+<Screen3>:
+#MDScreen:
+    name: "scr3"
+    MDLabel:
+        text: "scr3"
+        #halign: "center"
+
+<ItemWithCheckbox>:
+    id:itemkvId
+    #text:root.shopItem.name
+    LeftCheckbox:
+        id:check
+        on_release:
+            root.mark(check,itemkvId,root.pkId)
+    #IconLeftWidget:
+    #    icon: root.icon
+    #RightCheckbox:
+    IconRightWidget:
+        #icon:"trash-can-outline"
+        icon:root.icon
+        theme_text_color: "Custom"
+        text_color: 1, 0, 0, 1
+        on_release:
+            root.deleteItem(itemkvId)
+
+
+# add the following
+<DialogContentNewActivi>:
+    orientation: 'vertical'
+    spacing:"10dp"
+    size_hint: 1, None #para cubrir todos elementos
+    height: "130dp"
+
+    GridLayout:
+        rows:1
+        
+        MDTextField:
+            id:activiDialogName
+            hint_text:"Actividad"
+            #on_text_validate:(app.addNewActivi(activiDialogName,activiDialogDateTxt),app.closeDialogNewActivi())
+        
+        MDIconButton:
+            icon:"calendar"
+            on_release:root.showDatePickerNewActivi()
+            #padding:"10dp"
+    
+    MDLabel:
+        #spacing:"50dp"
+        id: activiDialogDate
+    
+    
+    BoxLayout:
+        #spacing:"50dp"
+        orientation: "horizontal"
+        
+        MDRaisedButton:
+            text:"Guardar"
+            #on_release: (app.add_task(task_text, date_text.text), app.close_dialog())
+            on_release: (app.addNewActivi(activiDialogName,activiDialogDate),app.closeDialogNewActivi())
+            
+        MDFlatButton:
+            text:"Cancelar"
+            on_release:
+                app.closeDialogNewActivi()
+
+
+    
+
