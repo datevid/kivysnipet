@@ -1,0 +1,28 @@
+<Screen1>:
+    MDBoxLayout:
+        orientation:"vertical"
+       
+        MDTopAppBar:
+            title: "Todo List - Menu"
+            md_bg_color:app.theme_cls.primary_light
+
+        MDLabel:
+            text: "contenido del label"
+            halign:"center"
+        
+        MDTextField:
+            hint_text:"usuario"
+            helper_text:"Ingresa su usuario"
+            helper_text_mode:"on_error"
+            max_text_length:7
+            mode:"rectangle"
+
+        MDBottomAppBar:
+            MDTopAppBar:
+                title:"bottom"
+                icon:"plus"
+                type:"bottom"
+                left_action_items:[["menu",lambda x:app.fnBottomMenu()]]
+                on_action_button: app.fnButtomPlus(self.icon)
+
+        
