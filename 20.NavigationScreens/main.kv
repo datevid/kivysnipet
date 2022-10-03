@@ -1,0 +1,120 @@
+<ScreenNavigationMain>:
+    MDScreen:
+        MDTopAppBar:
+            pos_hint: {"top": 1}
+            elevation: 4
+            title: "Navigations with multiples screens and list"
+            left_action_items: [["menu", lambda x: navDrawerId.set_state("open")]]
+        MDNavigationLayout:
+            MDScreenManager:
+                id: screenInnerId
+                #ScreenInner1:
+                #ScreenInner2:
+                #ScreenInner3:
+        MDNavigationDrawer:
+            id: navDrawerId
+            radius: (0, 0, 0, 0)
+            MDNavigationDrawerMenu:
+
+                MDNavigationDrawerHeader:
+                    title: "Header title"
+                    title_color: "#4a4939"
+                    text: "Header text"
+                    spacing: "4dp"
+                    padding: "12dp", 0, 0, "56dp"
+
+                MDNavigationDrawerLabel:
+                    text: "Mail"
+
+                MDNavigationDrawerItem:
+                    icon: "gmail"
+                    right_text: "+99"
+                    text_right_color: "#4a4939"
+                    text: "Screen1"
+                    on_press:
+                        #root.navDrawerId.set_state("close")
+                        navDrawerId.set_state("close")
+                        app.changeScreenInner("scr1")
+                        #root.screen_manager.current = "scr1"
+
+                MDNavigationDrawerItem:
+                    icon: "send"
+                    text: "Screen2"
+                    on_press:
+                        navDrawerId.set_state("close")
+                        #root.screen_manager.current = "scr2"
+                        app.changeScreenInner("scr2")
+
+                MDNavigationDrawerItem:
+                    icon: "send"
+                    text: "Screen3"
+                    on_press:
+                        navDrawerId.set_state("close")
+                        #root.screen_manager.current = "scr3"
+                        app.changeScreenInner("scr3")
+
+                MDNavigationDrawerDivider:
+
+                MDNavigationDrawerLabel:
+                    text: "Labels"
+
+                MDNavigationDrawerItem:
+                    icon: "information-outline"
+                    text: "Label"
+
+                MDNavigationDrawerItem:
+                    icon: "information-outline"
+                    text: "Label"
+
+<ScreenInner1>:
+#MDScreen:
+    #name:"scr1"
+    BoxLayout:
+        orientation:"vertical"
+        spacing:"25dp"
+        padding:[12,80,12,12]
+
+        MDScrollView:
+            MDList:
+                OneLineListItem:
+                    text: "screen with menu"
+                    on_press:
+                        #app.onClicScreenWithMenu()
+                        app.changeScreenInner("scr2")
+                OneLineListItem:
+                    text: "screen without menu"
+                    on_press:
+                        app.onClicScreenWithoutMenu()
+                OneLineListItem:
+                    text: "List n 1"
+                    on_press:
+                        app.listclick1()
+                OneLineListItem:
+                    text: "List n 2"
+                    on_press:
+                        app.listclick2()
+
+
+<ScreenInner2>:
+#MDScreen:
+    #name: "scr2"
+    MDLabel:
+        text: "Sscr2"
+        #halign: "center"
+
+<ScreenInner3>:
+#MDScreen:
+    #name: "scr3"
+    MDLabel:
+        text: "scr3"
+        #halign: "center"
+
+<ScreenWithMenu>:
+    MDLabel:
+        text: "Label with menu"
+        
+
+<ScreenWithoutMenu>:
+    MDLabel:
+        text: "Label without menu"
+        
