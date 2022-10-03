@@ -1,0 +1,60 @@
+<MessageScreen>
+    MDBoxLayout:
+        orientation: 'vertical'
+
+        MDTopAppBar:
+            id:logoToolBar
+            #pos_hint: {"top": 1}
+            #elevation: 4
+            height: dp(50)
+            title: "Whatssap redesign"
+            right_action_items: [["dots-vertical", lambda x: x]]
+            margin:0
+        ScrollView:
+            do_scroll_y:True
+            effect_cls:'ScrollEffect'
+            bar_width:0
+            MDBoxLayout:
+                adaptive_height:True
+                orientation: 'vertical'
+                md_bg_color: app.theme_cls.primary_color
+                spacing:dp(20)
+                
+                #box para los iconos de los usuarios
+                MDBoxLayout:
+                    height:dp(60)
+                    size_hint_y: None
+                    ScrollView:
+                        do_scroll_y:False
+                        bar_width:0
+                        MDBoxLayout:
+                            id:story_layout
+                            adaptive_width:True
+                            spacing:10
+                            padding:[10,0,0,0]
+                            StoryWithIcon:
+                            #StoryWithImage:
+                            #    text:"Username"
+                            #    source:"user1.png"
+                            #StoryWithImage:
+                            #    text:"Username"
+                            #    source:"user1.png"
+                            #StoryWithImage:
+                            #    text:"Username"
+                            #    source:"user1.png"
+                            
+                            
+                #box para los mensajes
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    md_bg_color: app.theme_cls.bg_normal
+                    size_hint_y: None
+                    adaptive_height:True
+                    radius:[20,20,0,0]
+                    padding:[0,0,0,40]
+                    MDList:
+                        id:chatTimeline
+                        spacing:dp(10)
+                        #ChatListItem:
+                        #ChatListItem:
+                        #ChatListItem:
