@@ -21,6 +21,8 @@ from kivymd.icon_definitions import md_icons
 from kivymd.uix.selectioncontrol import MDCheckbox
 from Service import ShoppingItem, ShoppingList
 from demo.demo import profiles
+from demo.group import groups
+
 
 Window.size=(320,600)
 Builder.load_file("main.kv")
@@ -28,6 +30,7 @@ Builder.load_file("pages/story.kv")
 Builder.load_file("pages/ChatListItem.kv")
 Builder.load_file("pages/chatScreen.kv")
 Builder.load_file("pages/text_field.kv")
+Builder.load_file("pages/group_screen.kv")
 
 class Screen1(Screen):
     pass
@@ -67,6 +70,35 @@ class ChatListItem(MDCard):
     )
     friend_name=StringProperty()
 
+class ChatBubble(MDBoxLayout):
+    '''A chat bubble for the chat screen messages.'''
+
+    profile = DictProperty()
+    msg = StringProperty()
+    time = StringProperty()
+    sender = StringProperty()
+    isRead = OptionProperty('waiting', options=['read', 'delivered', 'waiting'])
+
+class GroupListItem(MDCard):
+    '''A clickable chat item for the group chat timeline.'''
+
+    isRead = OptionProperty(None, options=['delivered', 'read', 'new', 'waiting'])
+    group_name = StringProperty()
+    group_avatar = StringProperty()
+    friend_mssg = StringProperty()
+    timestamp = StringProperty()
+
+class ChatBubble(MDBoxLayout):
+    '''A chat bubble for the chat screen messages.'''
+
+    profile = DictProperty()
+    msg = StringProperty()
+    time = StringProperty()
+    sender = StringProperty()
+    isRead = OptionProperty('waiting', options=['read', 'delivered', 'waiting'])
+
+class GroupScreen(Screen):
+    '''A screen that display messages history in groups .'''
 
 class ListApp(MDApp):
     def build(self):
@@ -74,7 +106,8 @@ class ListApp(MDApp):
 
         screens=[
             MessageScreen(name="message"),#self.wm.screens[0].ids['<id>'].add_widget()
-            ChatScreen(name="chat-screen")
+            GroupScreen(name="group"),#self.wm.screens[1].ids['<id>'].add_widget()
+            ChatScreen(name="chat-screen"),
         ]
         self.wm=WindowManager(transition=FadeTransition())
         for screen in screens:
@@ -82,7 +115,7 @@ class ListApp(MDApp):
 
         self.storyBuilder();
         self.chatListBuilder();
-
+        self.grouplist_builder()
         #setting current screen
         #self.wm.current="message"
         #self.wm.current="chat-screen"
@@ -119,11 +152,39 @@ class ListApp(MDApp):
     def create_chat(self, profile):
         '''Get all messages and create a chat screen'''
         self.chat_screen = ChatScreen()
-        #self.msg_builder(profile, self.chat_screen)
+        self.msg_builder(profile, self.chat_screen)
         self.chat_screen.text = profile['name']
         self.chat_screen.image = profile['image']
         self.chat_screen.active = profile['active']
         self.wm.switch_to(self.chat_screen)
+
+    def msg_builder(self, profile, screen):
+        '''Create a message bubble for creating chat.'''
+        for prof in profile['msg']:
+            for messages in prof.split("~"):
+                if messages != "":
+                    message, time, isRead, sender = messages.split(";")
+                    self.chatmsg = ChatBubble()
+                    self.chatmsg.msg = message
+                    self.chatmsg.time = time
+                    self.chatmsg.isRead = isRead
+                    self.chatmsg.sender = sender
+                    screen.ids['msglist'].add_widget(self.chatmsg)
+                else:
+                    print("No message")
+
+                print(self.chatmsg.isRead)
+
+    def grouplist_builder(self):
+        '''Create a Chat List Item for each group and
+        adds it to the Group List'''
+        for group in groups:
+            self.groupitem = GroupListItem()
+            self.groupitem.group = group
+            self.groupitem.group_name = group['name']
+            self.groupitem.group_avatar = group['image']
+            self.groupitem.friend_mssg, self.groupitem.timestamp, self.groupitem.isRead = group['msg'].split(';')
+            self.wm.screens[1].ids['grouplist'].add_widget(self.groupitem)
 
 if __name__ == '__main__':
     ListApp().run();
